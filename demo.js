@@ -1,14 +1,13 @@
-angular.module('demo', ['oc.lazyLoad']).controller('AppCtrl', function($injector, $ocLazyLoad) {
+angular.module('demo', ['ui.router', 'store'])
+.config(function($stateProvider) {
+  $stateProvider.state('store', {
+    templateUrl: 'store/store.html',
+    controller: 'StoreCtrl as store'
+  });
+})
+.controller('AppCtrl', function($state) {
   var app = this;
   app.click = function() {
-    console.log('clicked!');
-    $ocLazyLoad.load({
-      name: 'store',
-      files: [
-        'store.js'
-      ]
-    }).then(function() {
-      $injector.get('cart').buy();
-    });
+    $state.go('store');
   };
 });
